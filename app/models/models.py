@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, DateTime, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 from app.database import Base
 
+
 # Dispatcher Class
 class Dispatcher(Base):
     __tablename__ = "dispatchers"
