@@ -9,6 +9,9 @@ def create_order(db: Session, order_data: OrderCreate):
     db.refresh(db_order)
     return db_order
 
+def get_all_orders(db: Session):
+    return db.query(Order).all()
+
 def get_order(db: Session, order_id: int):
     return db.query(Order).filter(Order.OrderID == order_id).first()
 

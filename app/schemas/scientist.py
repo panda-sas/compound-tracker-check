@@ -6,6 +6,9 @@ class ScientistBase(BaseModel):
     UIN: str
     Email: str
 
+    class Config:
+        orm_mode = True
+
 class ScientistCreate(ScientistBase):
     pass
 

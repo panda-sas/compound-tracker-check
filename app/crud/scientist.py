@@ -27,3 +27,7 @@ def delete_scientist(db: Session, scientist_id: int):
         db.delete(db_scientist)
         db.commit()
     return db_scientist
+
+def get_all_scientists(db: Session):
+    return db.query(Scientist).all()
+

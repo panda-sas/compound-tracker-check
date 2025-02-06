@@ -1,9 +1,9 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.crud.order import create_order, get_order, update_order, delete_order  # Adjusted to the new path
+from app.crud.order import create_order, get_order, update_order, delete_order, get_all_orders  # Adjusted to the new path
 from app.crud.batch import create_batch, get_batch, update_batch, delete_batch
 from app.crud.compound import create_compound, get_compound, update_compound, delete_compound
-from app.crud.scientist import create_scientist, get_scientist, update_scientist, delete_scientist
+from app.crud.scientist import create_scientist, get_scientist, update_scientist, delete_scientist, get_all_scientists
 from app.schemas.scientist import ScientistCreate, ScientistUpdate
 from app.schemas.project import ProjectCreate, ProjectUpdate
 from app.schemas.target import TargetCreate, TargetUpdate
@@ -23,6 +23,9 @@ from app.database import get_db  # Adjusted to the new path
 app = FastAPI()
 
 #Order Routes
+@app.get("/orders/")
+def get_orders(db: Session = Depends(get_db)):
+    return get_all_orders(db)
 
 @app.post("/orders/")
 def create_order_endpoint(order_data: OrderCreate, db: Session = Depends(get_db)):
@@ -105,6 +108,10 @@ def delete_compound_endpoint(compound_id: int, db: Session = Depends(get_db)):
 @app.post("/scientists/")
 def create_scientist_endpoint(scientist_data: ScientistCreate, db: Session = Depends(get_db)):
     return create_scientist(db=db, scientist_data=scientist_data)
+
+@app.get("/scientists/")
+def get_scientists(db: Session = Depends(get_db)):
+    return get_all_scientists(db)
 
 @app.get("/scientists/{scientist_id}")
 def get_scientist_endpoint(scientist_id: int, db: Session = Depends(get_db)):
