@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
+from app.api.routes import order
 from app.crud.order import create_order, get_order, update_order, delete_order, get_all_orders  # Adjusted to the new path
 from app.crud.batch import create_batch, get_batch, update_batch, delete_batch
 from app.crud.compound import create_compound, get_compound, update_compound, delete_compound
@@ -32,9 +33,11 @@ app.add_middleware(
     allow_headers=["*"],  # Allow all headers
 )
 
+# Include the order router
+app.include_router(order.router)
 
 #Order Routes
-@app.get("/orders/")
+@app.get("/order-details/")
 def get_orders(db: Session = Depends(get_db)):
     return get_all_orders(db)
 
@@ -42,7 +45,7 @@ def get_orders(db: Session = Depends(get_db)):
 def create_order_endpoint(order_data: OrderCreate, db: Session = Depends(get_db)):
     return create_order(db=db, order_data=order_data)
 
-@app.get("/orders/{order_id}")
+@app.get("/order-details/{order_id}")
 def get_order_endpoint(order_id: int, db: Session = Depends(get_db)):
     db_order = get_order(db, order_id)
     if db_order is None:
