@@ -9,6 +9,9 @@ def create_dispatcher(db: Session, dispatcher_data: DispatcherCreate):
     db.refresh(db_dispatcher)
     return db_dispatcher
 
+def get_all_dispatchers(db: Session):
+    return db.query(Dispatcher).all()
+
 def get_dispatcher(db: Session, dispatcher_id: int):
     return db.query(Dispatcher).filter(Dispatcher.DispatcherId == dispatcher_id).first()
 

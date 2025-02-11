@@ -4,6 +4,9 @@ from typing import Optional
 class DispatcherBase(BaseModel):
     DispatcherName: str
 
+    class Config:
+        orm_mode = True
+
 class DispatcherCreate(DispatcherBase):
     pass
 

@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
-import Modal from "./Modal";
+import Modal from "./Modal/Modal";
 import "./Orders.css";
+import AddOrder from "./AddOrder/AddOrder";
 
 function Orders() {
   const [orders, setOrders] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const handleAddOrder = (newOrder) => {
+    setOrders([...orders, { id: orders.length + 1, ...newOrder }]);
+  };
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -49,6 +53,7 @@ function Orders() {
   return (
     <div className="orders-container">
       <h1>Orders</h1>
+      <AddOrder onAdd={handleAddOrder} />
       {orders.map((order) => (
         <div key={order.OrderID} className="order-card">
           <h2>Order ID: {order.OrderID}</h2>
