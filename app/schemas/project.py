@@ -4,6 +4,9 @@ from typing import Optional
 class ProjectBase(BaseModel):
     ProjectName: str
 
+    class Config:
+        orm_mode = True
+
 class ProjectCreate(ProjectBase):
     pass
 

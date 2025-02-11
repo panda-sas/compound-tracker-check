@@ -13,7 +13,7 @@ from app.schemas.compound import CompoundCreate, CompoundUpdate
 from app.schemas.dispatcher import DispatcherCreate, DispatcherUpdate
 from app.schemas.checkinout import CheckInOutCreate, CheckInOutUpdate
 from app.crud.dispatcher import create_dispatcher, get_dispatcher, update_dispatcher, delete_dispatcher
-from app.crud.project import create_project, get_project, update_project, delete_project
+from app.crud.project import create_project, get_project, update_project, delete_project, get_all_projects
 from app.crud.target import create_target, get_target, update_target, delete_target
 from app.crud.checkinout import create_checkinout, get_checkinout, update_checkinout, delete_checkinout
 
@@ -164,6 +164,10 @@ def delete_dispatcher_endpoint(dispatcher_id: int, db: Session = Depends(get_db)
 @app.post("/projects/")
 def create_project_endpoint(project_data: ProjectCreate, db: Session = Depends(get_db)):
     return create_project(db=db, project_data=project_data)
+
+@app.get("/projects/")
+def get_projects(db: Session = Depends(get_db)):
+    return get_all_projects(db)
 
 @app.get("/projects/{project_id}")
 def get_project_endpoint(project_id: int, db: Session = Depends(get_db)):

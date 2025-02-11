@@ -27,3 +27,6 @@ def delete_project(db: Session, project_id: int):
         db.delete(db_project)
         db.commit()
     return db_project
+
+def get_all_projects(db: Session):
+    return db.query(Project).all()
