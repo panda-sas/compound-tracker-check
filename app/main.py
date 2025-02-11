@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from app.crud.order import create_order, get_order, update_order, delete_order, get_all_orders  # Adjusted to the new path
 from app.crud.batch import create_batch, get_batch, update_batch, delete_batch
@@ -21,6 +22,16 @@ from app.crud.checkinout import create_checkinout, get_checkinout, update_checki
 from app.database import get_db  # Adjusted to the new path
 
 app = FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3001"],  # Allow your frontend's URL
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allow all headers
+)
+
 
 #Order Routes
 @app.get("/orders/")
